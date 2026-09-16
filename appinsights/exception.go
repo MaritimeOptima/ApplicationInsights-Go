@@ -16,7 +16,7 @@ type ExceptionTelemetry struct {
 	BaseTelemetryMeasurements
 
 	// Panic message: string, error, or Stringer
-	Error interface{}
+	Error any
 
 	// List of stack frames. Use GetCallstack to generate this data.
 	Frames []*contracts.StackFrame
@@ -29,11 +29,11 @@ type ExceptionTelemetry struct {
 // current callstack. This should be used directly from a function that
 // handles a recover(), or to report an unexpected error return value from
 // a function.
-func NewExceptionTelemetry(err interface{}) *ExceptionTelemetry {
+func NewExceptionTelemetry(err any) *ExceptionTelemetry {
 	return newExceptionTelemetry(err, 1)
 }
 
-func newExceptionTelemetry(err interface{}, skip int) *ExceptionTelemetry {
+func newExceptionTelemetry(err any, skip int) *ExceptionTelemetry {
 	return &ExceptionTelemetry{
 		Error:         err,
 		Frames:        GetCallstack(2 + skip),
@@ -112,12 +112,10 @@ func GetCallstack(skip int) []*contracts.StackFrame {
 			stackFrame.Method = frame.Function
 
 			/* Break up function into assembly/function */
-			lastSlash := strings.LastIndexByte(frame.Function, '/')
-			if lastSlash < 0 {
+			lastSlash := max(strings.LastIndexByte(frame.Function, '/'),
 				// e.g. "runtime.gopanic"
 				// The below works with lastSlash=0
-				lastSlash = 0
-			}
+				0)
 
 			firstDot := strings.IndexByte(frame.Function[lastSlash:], '.')
 			if firstDot >= 0 {

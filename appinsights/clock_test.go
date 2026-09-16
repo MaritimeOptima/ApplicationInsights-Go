@@ -32,7 +32,7 @@ func slowTick(seconds int) {
 	// really sure I have another choice.
 
 	time.Sleep(delay)
-	for i := 0; i < seconds; i++ {
+	for range seconds {
 		fakeClock.Increment(time.Second)
 		time.Sleep(delay)
 	}

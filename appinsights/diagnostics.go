@@ -76,7 +76,7 @@ func (writer *diagnosticsMessageWriter) Write(message string) {
 	}
 }
 
-func (writer *diagnosticsMessageWriter) Printf(message string, args ...interface{}) {
+func (writer *diagnosticsMessageWriter) Printf(message string, args ...any) {
 	// Don't bother with Sprintf if nobody is listening
 	if writer.hasListeners() {
 		writer.Write(fmt.Sprintf(message, args...))

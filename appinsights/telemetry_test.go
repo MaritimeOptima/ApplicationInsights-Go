@@ -11,7 +11,7 @@ import (
 
 const float_precision = 1e-4
 
-func checkDataContract(t *testing.T, property string, actual, expected interface{}) {
+func checkDataContract(t *testing.T, property string, actual, expected any) {
 	if x, ok := actual.(float64); ok {
 		if y, ok := expected.(float64); ok {
 			if math.Abs(x-y) > float_precision {
@@ -27,7 +27,7 @@ func checkDataContract(t *testing.T, property string, actual, expected interface
 	}
 }
 
-func checkNotNullOrEmpty(t *testing.T, property string, actual interface{}) {
+func checkNotNullOrEmpty(t *testing.T, property string, actual any) {
 	if actual == nil {
 		t.Errorf("Property %s was expected not to be null.\n", property)
 	} else if str, ok := actual.(string); ok && str == "" {

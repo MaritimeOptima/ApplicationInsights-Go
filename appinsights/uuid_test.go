@@ -17,28 +17,24 @@ func TestNewUUID(t *testing.T) {
 	results := make(chan string, 100)
 
 	// Start normal set of UUID generation:
-	for i := 0; i < goroutines; i++ {
-		finish.Add(1)
-		go func() {
-			defer finish.Done()
+	for range goroutines {
+		finish.Go(func() {
 			start.Wait()
-			for t := 0; t < uuidsPerRoutine; t++ {
+			for range uuidsPerRoutine {
 				results <- newUUID().String()
 			}
-		}()
+		})
 	}
 
 	// Start broken set of UUID generation
 	brokenGen := newUuidGenerator(&brokenReader{})
-	for i := 0; i < goroutines; i++ {
-		finish.Add(1)
-		go func() {
-			defer finish.Done()
+	for range goroutines {
+		finish.Go(func() {
 			start.Wait()
-			for t := 0; t < uuidsPerRoutine; t++ {
+			for range uuidsPerRoutine {
 				results <- brokenGen.newUUID().String()
 			}
-		}()
+		})
 	}
 
 	// Close the channel when all the goroutines have exited
