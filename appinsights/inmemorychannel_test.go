@@ -151,7 +151,7 @@ func TestMultipleSubmit(t *testing.T) {
 
 	start := currentClock.Now()
 
-	for i := 0; i < 16; i++ {
+	for i := range 16 {
 		client.TrackTrace(fmt.Sprintf("~msg-%x~", i), Information)
 		slowTick(1)
 	}
@@ -161,7 +161,7 @@ func TestMultipleSubmit(t *testing.T) {
 	req1 := transmitter.waitForRequest(t)
 	assertTimeApprox(t, req1.timestamp, start.Add(ten_seconds))
 
-	for i := 0; i < 10; i++ {
+	for i := range 10 {
 		if !strings.Contains(req1.payload, fmt.Sprintf("~msg-%x~", i)) {
 			t.Errorf("Payload does not contain expected item: %x", i)
 		}
@@ -327,14 +327,14 @@ func TestSendOnBufferFull(t *testing.T) {
 
 	transmitter.prepResponse(200, 200)
 
-	for i := 0; i < 5; i++ {
+	for i := range 5 {
 		client.TrackTrace(fmt.Sprintf("~msg-%d~", i), Information)
 	}
 
 	req1 := transmitter.waitForRequest(t)
 	assertTimeApprox(t, req1.timestamp, currentClock.Now())
 
-	for i := 0; i < 4; i++ {
+	for i := range 4 {
 		if !strings.Contains(req1.payload, fmt.Sprintf("~msg-%d~", i)) || len(req1.items) != 4 {
 			t.Errorf("Payload does not contain expected message")
 		}
@@ -450,7 +450,7 @@ func TestThrottleDropsMessages(t *testing.T) {
 	client.TrackTrace("~throttled~", Information)
 	slowTick(10)
 
-	for i := 0; i < 20; i++ {
+	for i := range 20 {
 		client.TrackTrace(fmt.Sprintf("~msg-%d~", i), Information)
 	}
 
@@ -576,7 +576,7 @@ func TestThrottleAbandonsMessageOnStop(t *testing.T) {
 	slowTick(45)
 
 	// ~throttled~ will get retried after throttle is done; ~dropped~ should get lost.
-	for i := 0; i < 2; i++ {
+	for range 2 {
 		req := transmitter.waitForRequest(t)
 		if strings.Contains(req.payload, "~dropped~") || len(req.items) != 1 {
 			t.Fatal("Dropped should have never been sent")

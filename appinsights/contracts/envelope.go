@@ -41,7 +41,7 @@ type Envelope struct {
 	Tags map[string]string `json:"tags,omitempty"`
 
 	// Telemetry data item.
-	Data interface{} `json:"data"`
+	Data any `json:"data"`
 }
 
 // Truncates string fields that exceed their maximum supported sizes for this

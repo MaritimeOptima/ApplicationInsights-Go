@@ -7,7 +7,7 @@ type Data struct {
 	Base
 
 	// Container for data item (B section).
-	BaseData interface{} `json:"baseData"`
+	BaseData any `json:"baseData"`
 }
 
 // Truncates string fields that exceed their maximum supported sizes for this
