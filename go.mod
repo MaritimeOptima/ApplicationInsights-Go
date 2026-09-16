@@ -1,4 +1,4 @@
-module github.com/microsoft/ApplicationInsights-Go
+module github.com/maritimeoptima/ApplicationInsights-Go
 
 go 1.26.0
 

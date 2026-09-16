@@ -4,7 +4,7 @@ import (
 	"maps"
 	"strings"
 
-	"github.com/microsoft/ApplicationInsights-Go/appinsights/contracts"
+	"github.com/maritimeoptima/ApplicationInsights-Go/appinsights/contracts"
 )
 
 // Encapsulates contextual data common to all telemetry submitted through a
