@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"compress/gzip"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"strings"
@@ -34,7 +34,7 @@ func (server *testServer) Close() {
 }
 
 func (server *testServer) ServeHTTP(writer http.ResponseWriter, req *http.Request) {
-	body, _ := ioutil.ReadAll(req.Body)
+	body, _ := io.ReadAll(req.Body)
 
 	hdr := writer.Header()
 	for k, v := range server.responseHeaders {
@@ -139,7 +139,7 @@ func doBasicTransmit(client transmitter, server *testServer, t *testing.T) {
 		t.Fatalf("Couldn't create gzip reader: %s", err.Error())
 	}
 
-	body, err := ioutil.ReadAll(reader)
+	body, err := io.ReadAll(reader)
 	reader.Close()
 	if err != nil {
 		t.Fatalf("Couldn't read compressed data: %s", err.Error())
@@ -498,7 +498,7 @@ func TestGetRetryItems(t *testing.T) {
 
 func makePayload() ([]byte, telemetryBufferItems) {
 	buffer := telemetryBuffer()
-	for i := 0; i < 7; i++ {
+	for i := range 7 {
 		tr := NewTraceTelemetry(fmt.Sprintf("msg%d", i+1), contracts.SeverityLevel(i%5))
 		tr.Tags.Operation().SetId(fmt.Sprintf("op%d", i))
 		buffer.add(tr)

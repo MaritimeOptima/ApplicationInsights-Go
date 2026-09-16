@@ -1,6 +1,7 @@
 package appinsights
 
 import (
+	"maps"
 	"strings"
 
 	"github.com/microsoft/ApplicationInsights-Go/appinsights/contracts"
@@ -82,9 +83,7 @@ func (context *TelemetryContext) envelop(item Telemetry) *contracts.Envelope {
 	} else {
 		// Create new tags object
 		envelope.Tags = make(map[string]string)
-		for k, v := range context.Tags {
-			envelope.Tags[k] = v
-		}
+		maps.Copy(envelope.Tags, context.Tags)
 	}
 
 	// Create operation ID if it does not exist

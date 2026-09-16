@@ -133,7 +133,7 @@ func collatzFrames(n int) []string {
 	return result
 }
 
-func catchPanic(err interface{}) *ExceptionTelemetry {
+func catchPanic(err any) *ExceptionTelemetry {
 	var result *ExceptionTelemetry
 
 	func() {
@@ -187,7 +187,7 @@ func panicTestCollatzOdd(n int) int {
 	return panicTestCollatz((3 * n) + 1)
 }
 
-func catchTrackPanic(client TelemetryClient, err interface{}) {
+func catchTrackPanic(client TelemetryClient, err any) {
 	defer TrackPanic(client, false)
 	panic(err)
 }

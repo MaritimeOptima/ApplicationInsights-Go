@@ -361,13 +361,13 @@ func (buffer *telemetryBufferItems) add(items ...Telemetry) {
 	*buffer = append(*buffer, telemetryBuffer(items...)...)
 }
 
-type jsonMessage map[string]interface{}
+type jsonMessage map[string]any
 type jsonPayload []jsonMessage
 
 func parsePayload(payload []byte) (jsonPayload, error) {
 	// json.Decoder can detect line endings for us but I'd like to explicitly find them.
 	var result jsonPayload
-	for _, item := range bytes.Split(payload, []byte("\n")) {
+	for item := range bytes.SplitSeq(payload, []byte("\n")) {
 		if len(item) == 0 {
 			continue
 		}
@@ -384,7 +384,7 @@ func parsePayload(payload []byte) (jsonPayload, error) {
 	return result, nil
 }
 
-func (msg jsonMessage) assertPath(t *testing.T, path string, value interface{}) {
+func (msg jsonMessage) assertPath(t *testing.T, path string, value any) {
 	const tolerance = 0.0001
 	v, err := msg.getPath(path)
 	if err != nil {
@@ -437,16 +437,16 @@ func (msg jsonMessage) assertPath(t *testing.T, path string, value interface{}) 
 	}
 }
 
-func (msg jsonMessage) getPath(path string) (interface{}, error) {
+func (msg jsonMessage) getPath(path string) (any, error) {
 	parts := strings.Split(path, ".")
-	var obj interface{} = msg
+	var obj any = msg
 	for i, part := range parts {
 		if strings.HasPrefix(part, "[") && strings.HasSuffix(part, "]") {
 			// Array
 			idxstr := part[1 : len(part)-2]
 			idx, _ := strconv.Atoi(idxstr)
 
-			if ar, ok := obj.([]interface{}); ok {
+			if ar, ok := obj.([]any); ok {
 				if idx >= len(ar) {
 					return nil, fmt.Errorf("Index out of bounds: %s", strings.Join(parts[0:i+1], "."))
 				}
@@ -456,7 +456,7 @@ func (msg jsonMessage) getPath(path string) (interface{}, error) {
 				return nil, fmt.Errorf("Path %s is not an array", strings.Join(parts[0:i], "."))
 			}
 		} else if part == "<len>" {
-			if ar, ok := obj.([]interface{}); ok {
+			if ar, ok := obj.([]any); ok {
 				return len(ar), nil
 			}
 		} else {
@@ -467,7 +467,7 @@ func (msg jsonMessage) getPath(path string) (interface{}, error) {
 				} else {
 					return nil, fmt.Errorf("Key %s not found in %s", part, strings.Join(parts[0:i], "."))
 				}
-			} else if dict, ok := obj.(map[string]interface{}); ok {
+			} else if dict, ok := obj.(map[string]any); ok {
 				if val, ok := dict[part]; ok {
 					obj = val
 				} else {

@@ -55,7 +55,7 @@ type TelemetryClient interface {
 	// Log an exception with the specified error, which may be a string,
 	// error or Stringer. The current callstack is collected
 	// automatically.
-	TrackException(err interface{})
+	TrackException(err any)
 }
 
 type telemetryClient struct {
@@ -150,6 +150,6 @@ func (tc *telemetryClient) TrackAvailability(name string, duration time.Duration
 
 // Log an exception with the specified error, which may be a string, error
 // or Stringer.  The current callstack is collected automatically.
-func (tc *telemetryClient) TrackException(err interface{}) {
+func (tc *telemetryClient) TrackException(err any) {
 	tc.Track(newExceptionTelemetry(err, 1))
 }
