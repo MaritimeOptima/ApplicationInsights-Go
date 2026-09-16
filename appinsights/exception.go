@@ -6,7 +6,7 @@ import (
 	"runtime"
 	"strings"
 
-	"github.com/maritimeoptima/ApplicationInsights-Go/appinsights/contracts"
+	"github.com/microsoft/ApplicationInsights-Go/appinsights/contracts"
 )
 
 // Exception telemetry items represent a handled or unhandled exceptions that

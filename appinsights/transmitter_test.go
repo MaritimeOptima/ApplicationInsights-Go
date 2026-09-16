@@ -11,7 +11,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/maritimeoptima/ApplicationInsights-Go/appinsights/contracts"
+	"github.com/microsoft/ApplicationInsights-Go/appinsights/contracts"
 )
 
 type testServer struct {

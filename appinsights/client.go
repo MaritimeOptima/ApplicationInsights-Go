@@ -3,7 +3,7 @@ package appinsights
 import (
 	"time"
 
-	"github.com/maritimeoptima/ApplicationInsights-Go/appinsights/contracts"
+	"github.com/microsoft/ApplicationInsights-Go/appinsights/contracts"
 )
 
 // Application Insights telemetry client provides interface to track telemetry

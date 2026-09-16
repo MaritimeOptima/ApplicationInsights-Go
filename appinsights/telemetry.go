@@ -7,7 +7,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/maritimeoptima/ApplicationInsights-Go/appinsights/contracts"
+	"github.com/microsoft/ApplicationInsights-Go/appinsights/contracts"
 )
 
 // Common interface implemented by telemetry data contracts
