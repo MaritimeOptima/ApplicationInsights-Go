@@ -17,6 +17,8 @@ your `go.mod`.
 - Ran `go fix` over the code, for example `interface{}` is now `any`.
 - SDK version bumped from 0.4.4 to 0.4.7.
 - Dependabot enabled for dependency updates.
+- Removed the schema generator script (`generateschema.ps1`); any changes
+to the shcema must be handled manually.
 - Removed the upstream Travis CI config and Microsoft's community files
   (Code of Conduct, Security, Contributing, PR template).
 
