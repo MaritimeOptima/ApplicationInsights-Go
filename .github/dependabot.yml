@@ -3,7 +3,8 @@ updates:
   - package-ecosystem: "gomod" 
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: "weekly"
+      day: "monday"
       time: "06:30"
       timezone: "Europe/Oslo"
     target-branch: "master"
