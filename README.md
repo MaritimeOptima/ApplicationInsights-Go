@@ -11,15 +11,14 @@ your `go.mod`.
 
 ## Changes vs upstream
 
-- Updated dependencies: `code.cloudfoundry.org/clock` v1.88.0 and
-  `github.com/gofrs/uuid/v5` (upstream used `gofrs/uuid` v3). Dropped the unused indirect dependencies.
-- Requires Go 1.27 (upstream: Go 1.12).
+- Dependencies are kept up to date.
+- Requires a new Go version.
 - Ran `go fix` over the code, for example `interface{}` is now `any`.
-- SDK version bumped from 0.4.4 to 0.4.7.
+- SDK version is bumped.
 - Dependabot enabled for dependency updates.
 - Removed the schema generator script (`generateschema.ps1`); any changes
-to the shcema must be handled manually.
-- Removed the upstream Travis CI config and Microsoft's community files
+to the schema must be handled manually.
+- Removed the Travis CI config and Microsoft's community files
   (Code of Conduct, Security, Contributing, PR template).
 
 ## Contributing
