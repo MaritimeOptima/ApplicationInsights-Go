@@ -20,6 +20,7 @@ your `go.mod`.
 to the schema must be handled manually.
 - Removed the Travis CI config and Microsoft's community files
   (Code of Conduct, Security, Contributing, PR template).
+- Removed a bunch of lines from .gitignore
 
 ## Contributing
 
